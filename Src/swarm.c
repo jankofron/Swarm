@@ -244,30 +244,30 @@ configure(void)
 		{	min_d = max_d;	/* too shallow for depth variations */
 	}	}
 
-	/* default maxmem 512 MB gives -w32 */
-	for (max_w = (int) (log2(maxmem - 1) + 3.0); max_w > 15; max_w--)	/* -1 MB for stackuse etc */
+	/* default maxmem 512 MB gives -w32 */	
+	for (int _max_w = (max_w = (int) (log2(maxmem - 1) + 3.0)); _max_w > 15; _max_w--)	/* -1 MB for stackuse etc */
 	{
 		if (verbose)	/* debugging */
-		{	fprintf(stderr, "-w%d -m%ld..-m%ld\n", max_w, min_d, max_d);
+		{	fprintf(stderr, "-w%d -m%ld..-m%ld\n", _max_w, min_d, max_d);
 		}
 
 		if (min_d == max_d)
-		{	if (width_time(max_w) * max_mode <= maxcpu * sec_available)
+		{	if (width_time(_max_w) * max_mode <= maxcpu * sec_available)
 			{	d_increment = 1;
 				if (verbose)
 				{	fprintf(stderr, "nr_steps: 1\n\n");
 				}
-				return;	/* we found a usable setting for max_w and d_increment */
+				return;	/* we found a usable setting for _max_w and d_increment */
 			}
 		} else	/* use either 3, 2, or 1 intermediate depth-constraint */
 		for (nr_steps = 3; nr_steps >= 1; nr_steps--)
-		{	if (width_time(max_w) * max_mode * (nr_steps+1) <= maxcpu * sec_available)
+		{	if (width_time(_max_w) * max_mode * (nr_steps+1) <= maxcpu * sec_available)
 			{	d_increment = (max_d-min_d)/nr_steps;
 				d_increment = max(1, d_increment);
 				if (verbose)
 				{	fprintf(stderr, "nr_steps: %d incr %d\n\n", nr_steps+1, d_increment);
 				}
-				return;	/* we found a usable setting for max_w and d_increment */
+				return;	/* we found a usable setting for _max_w and d_increment */
 	}	}	}
 
 	fprintf(stderr, "swarm: cannot schedule jobs within given time bound\n");
