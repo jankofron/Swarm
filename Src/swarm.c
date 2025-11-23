@@ -305,7 +305,7 @@ early_termination(FILE *fd)
 		fprintf(fd, "\techo \"rm -f _foo_\" >> ${S}%d\n", script_nr);
 #else
 		fprintf(fd, "\techo \"wc -l *.trail > /dev/null 2>&1\" >> ${S}%d\n", script_nr);
-		fprintf(fd, "\techo \"if [ $? -eq 0 ] || [ -f swarm_times_up ]\" >> ${S}%d\n", script_nr);
+		fprintf(fd, "\techo \"if [ \\$? -eq 0 ] || [ -f swarm_times_up ]\" >> ${S}%d\n", script_nr);
 		fprintf(fd, "\techo \"then exit 1;\" >> ${S}%d\n", script_nr);
 		fprintf(fd, "\techo \"fi\">> ${S}%d\n", script_nr);
 #endif
